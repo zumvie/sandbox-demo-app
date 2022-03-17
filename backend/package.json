@@ -1,0 +1,34 @@
+{
+  "name": "sandbox-demo-app",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "ts-node src/index.ts"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zumvie/sandbox-demo-app.git"
+  },
+  "keywords": [],
+  "author": "Arturs Valenieks",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/zumvie/sandbox-demo-app/issues"
+  },
+  "homepage": "https://github.com/zumvie/sandbox-demo-app#readme",
+  "dependencies": {
+    "@badrap/valita": "^0.1.1",
+    "@types/koa": "^2.13.4",
+    "@types/koa-bodyparser": "^4.3.6",
+    "@types/koa-router": "^7.4.4",
+    "@vendia/serverless-express": "^4.5.4",
+    "aws-sdk": "^2.1095.0",
+    "koa": "^2.13.4",
+    "koa-bodyparser": "^4.3.0",
+    "koa-router": "^10.1.1"
+  },
+  "devDependencies": {
+    "typescript": "^4.6.2"
+  }
+}
