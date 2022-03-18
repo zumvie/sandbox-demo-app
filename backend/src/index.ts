@@ -8,6 +8,7 @@ import { sessionWebhookRoute } from './webhooks/session';
 import serverlessExpress from '@vendia/serverless-express';
 import { infoRoute } from './routes/info-route';
 import { appContext } from './app-context';
+import { listDemoEntities } from './routes/backend-api';
 
 const app = new Koa();
 const router = new Router();
@@ -17,6 +18,10 @@ router.post("/webhooks/zumvie/activate", activateWebhookRoute(appContext));
 router.post("/webhooks/zumvie/deactivate", deactivateWebhookRoute(appContext));
 router.post("/webhooks/zumvie/session", sessionWebhookRoute(appContext));
 
+// api for demo website
+router.get("/api/demo/:demoId", listDemoEntities(appContext));
+
+// something to return in generic case
 router.get("/(.*)", infoRoute());
 
 app.use(async (ctx, next) => {

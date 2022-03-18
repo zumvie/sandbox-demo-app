@@ -25,7 +25,7 @@ export type AccountEntity = v.Infer<typeof AccountEntity>;
 
 export const createAccountEntity = (metadata: AccountEntity["metadata"], date: number) => {
   const uniqueId = v4();
-  const accountId = `AC${uniqueId}`;
+  const accountId = `ACCOUNT-${uniqueId}`;
 
   return AccountEntity.parse({
     demoId: metadata.demoId,
