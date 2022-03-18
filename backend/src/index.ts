@@ -15,7 +15,7 @@ const router = new Router();
 // webhooks for zumvie integration
 router.post("/webhooks/zumvie/activate", activateWebhookRoute(appContext));
 router.post("/webhooks/zumvie/deactivate", deactivateWebhookRoute(appContext));
-router.post("/webhook/zumvie/session", sessionWebhookRoute(appContext));
+router.post("/webhooks/zumvie/session", sessionWebhookRoute(appContext));
 
 router.get("/(.*)", infoRoute());
 
