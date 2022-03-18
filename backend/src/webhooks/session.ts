@@ -1,5 +1,6 @@
 import Koa from 'koa';
+import { AppContext } from '../app-context';
 
-export const sessionWebhookRoute = (docClient: AWS.DynamoDB.DocumentClient) => (context: Koa.Context) => {
+export const sessionWebhookRoute = (appContext: AppContext) => (context: Koa.Context) => {
 
 }

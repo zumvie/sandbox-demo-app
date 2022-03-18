@@ -7,7 +7,7 @@ export class InfrastructureStack extends cdk.Stack {
 
     const table = new cdk.aws_dynamodb.Table(this, "Table", {
       partitionKey: {
-        name: "account",
+        name: "demoId",
         type: cdk.aws_dynamodb.AttributeType.STRING,
       },
       sortKey: {
@@ -22,8 +22,13 @@ export class InfrastructureStack extends cdk.Stack {
       bundling: {
         // localstack issue - https://github.com/localstack/localstack/issues/5131#issuecomment-995265153
         externalModules: [],
+      },
+      environment: {
+        TABLE_NAME: table.tableName,
       }
     });
+
+    table.grantReadWriteData(backend);
 
     const api = new cdk.aws_apigateway.LambdaRestApi(this, 'Api', {
       handler: backend,
