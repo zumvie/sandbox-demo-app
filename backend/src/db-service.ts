@@ -1,5 +1,3 @@
-
-
 import { AppContext } from "./app-context";
 
 export type DynamoEntity = {
@@ -7,10 +5,10 @@ export type DynamoEntity = {
   identifier: string;
 }
 
-export const batchWrite = async <T extends DynamoEntity>(context: AppContext, entitiy: T[]) => {
+export const writeEntities = async <T extends DynamoEntity>(context: AppContext, entities: T[]) => {
   await context.documentClient.batchWrite({
     RequestItems: {
-      [context.tableName]: entitiy.map(account => {
+      [context.tableName]: entities.map(account => {
         return {
           PutRequest: {
             Item: account,

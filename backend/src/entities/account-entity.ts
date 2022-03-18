@@ -10,6 +10,7 @@ export type AccountMetadata = v.Infer<typeof AccountMetadata>;
 export const AccountEntity = v.object({
   demoId: v.string(),
   identifier: v.string(),
+  date: v.number(),
 
   accountId: v.string(),
   username: v.string(),
@@ -22,13 +23,14 @@ export const AccountEntity = v.object({
 
 export type AccountEntity = v.Infer<typeof AccountEntity>;
 
-export const createAccountEntity = (metadata: AccountEntity["metadata"]) => {
+export const createAccountEntity = (metadata: AccountEntity["metadata"], date: number) => {
   const uniqueId = v4();
   const accountId = `AC${uniqueId}`;
 
   return AccountEntity.parse({
     demoId: metadata.demoId,
-    identifier: `/Demo/${metadata.demoId}/Account/${accountId}`,
+    identifier: `/Demo/${metadata.demoId}/Date/Account/${accountId}`,
+    date: date,
 
     accountId: accountId,
     username: `USERNAME-${uniqueId}`,

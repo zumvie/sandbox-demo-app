@@ -39,5 +39,12 @@ export const ActivateResponse = v.object({
   ),
 });
 
+export const DeactivateRequest = v.object({
+  deactivateData: DeactivateData,
+  type: v.literal("Deactivate"),
+});
+
 export type ActivateRequest = v.Infer<typeof ActivateRequest>;
 export type ActivateResponse = v.Infer<typeof ActivateResponse>;
+
+export type DeactivateRequest = v.Infer<typeof DeactivateRequest>;

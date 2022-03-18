@@ -2,20 +2,21 @@ import Koa from 'koa';
 
 
 import { AccountEntity, createAccountEntity } from '../entities/account-entity';
-import { batchWrite } from '../db-service';
+import { writeEntities } from '../db-service';
 import { AppContext } from '../app-context';
 import { ActivateRequest, ActivateResponse } from './entities';
 
 export const activateWebhookRoute = (appContext: AppContext) => async (context: Koa.Context) => {
   const request = ActivateRequest.parse(context.request.body);
+  const dateNow = Date.now();
 
   const accounts: AccountEntity[] = [];
 
   for (let i = 0; i < request.count; i++) {
-    accounts.push(createAccountEntity(request.metadata));
+    accounts.push(createAccountEntity(request.metadata, dateNow));
   }
 
-  await batchWrite(appContext, accounts);
+  await writeEntities(appContext, accounts);
 
   const responseBody = ActivateResponse.parse({
     accounts: accounts.map((acc): ActivateResponse["accounts"][0] => {
@@ -41,5 +42,6 @@ export const activateWebhookRoute = (appContext: AppContext) => async (context: 
     }),
   });
 
+  context.status = 200;
   context.body = responseBody;
 }
