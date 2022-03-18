@@ -8,54 +8,78 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { useParams } from 'react-router-dom';
 import { useFetch } from 'usehooks-ts'
-
-function createData(name: string, calories: number, fat: number, carbs: number, protein: number) {
-  return { name, calories, fat, carbs, protein };
-}
-
-const rows = [
-  createData('Frozen yoghurt', 159, 6.0, 24, 4.0),
-  createData('Ice cream sandwich', 237, 9.0, 37, 4.3),
-  createData('Eclair', 262, 16.0, 24, 6.0),
-  createData('Cupcake', 305, 3.7, 67, 4.3),
-  createData('Gingerbread', 356, 16.0, 49, 3.9),
-];
+import { DemoWebhookStepper } from './demo-webhook-stepper';
+import Box from '@mui/material/Box/Box';
+import Button from '@mui/material/Button/Button';
 
 const listDemoUrl = "https://a4ycpzr13e.execute-api.localhost.localstack.cloud:4566/prod/api/demo"
+
+export type Entities = {
+  [key: string]: {
+    Activate: any,
+    Session: any,
+    Deactivate: any,
+  }
+};
 
 export default function DemoWebhookCallsPage() {
   const {demoId} = useParams<{demoId: string}>();
   console.log(demoId);
 
-  const { data, error } = useFetch(`${listDemoUrl}/${demoId}`);
-
+  const { data, error } = useFetch<{items: any[]}>(`${listDemoUrl}/${demoId}`);
   console.log(data);
+
+  const entities: Entities = React.useMemo(() => {
+    if (!data?.items) {
+      return {};
+    }
+
+    const entities: Entities = {};
+
+    data.items.forEach(entity => {
+      const accountId = entity.accountId;
+
+      entities[accountId] = {
+        ...entities[accountId],
+        [entity.type]: entity,
+      }
+    });
+     
+    return entities;
+  }, [data]);
+
+console.log(entities);
 
   return (
     <TableContainer component={Paper}>
-      <Table sx={{ minWidth: 650 }} aria-label="simple table">
+      <Table>
         <TableHead>
           <TableRow>
-            <TableCell>Dessert (100g serving)</TableCell>
-            <TableCell align="right">Calories</TableCell>
-            <TableCell align="right">Fat&nbsp;(g)</TableCell>
-            <TableCell align="right">Carbs&nbsp;(g)</TableCell>
-            <TableCell align="right">Protein&nbsp;(g)</TableCell>
+            <TableCell>Date</TableCell>
+            <TableCell align="center">Steps</TableCell>
+            <TableCell align="right">Details</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows.map((row) => (
+
+          {Object.keys(entities).map((accountId) => (
             <TableRow
-              key={row.name}
-              sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+              key={accountId}
             >
               <TableCell component="th" scope="row">
-                {row.name}
+                {new Date(entities[accountId].Activate.date).toLocaleString()}
               </TableCell>
-              <TableCell align="right">{row.calories}</TableCell>
-              <TableCell align="right">{row.fat}</TableCell>
-              <TableCell align="right">{row.carbs}</TableCell>
-              <TableCell align="right">{row.protein}</TableCell>
+
+              <TableCell>
+                <Box sx={{ width: '100%' }}>
+                  <DemoWebhookStepper entity={entities[accountId]}/>
+                </Box>
+              </TableCell>
+
+              <TableCell align="right"> 
+                <Button variant="text">Details</Button>
+              </TableCell>
+
             </TableRow>
           ))}
         </TableBody>

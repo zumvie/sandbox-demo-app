@@ -1,6 +1,5 @@
 import Koa from 'koa';
 
-
 import { AccountEntity, createAccountEntity } from '../entities/account-entity';
 import { writeEntities } from '../db-service';
 import { AppContext } from '../app-context';
@@ -22,8 +21,7 @@ export const activateWebhookRoute = (appContext: AppContext) => async (context: 
     accounts: accounts.map((acc): ActivateResponse["accounts"][0] => {
       return {
         deactivateData: {
-          demoId: acc.demoId,
-          accountId: acc.accountId,
+          username: acc.username,
         },
         localStorage: {
           "ACCESS_TOKEN_EXAMPLE": acc.accessToken,

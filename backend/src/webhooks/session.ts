@@ -1,6 +1,6 @@
 import Koa from 'koa';
 import { AppContext } from '../app-context';
-import { writeEntities } from '../db-service';
+import { getAccountByUsername, writeEntities } from '../db-service';
 import { createSessionEntity } from '../entities/session-entity';
 import { SessionRequest, SessionResponse } from './entities';
 
@@ -8,7 +8,9 @@ export const sessionWebhookRoute = (appContext: AppContext) => async (context: K
   const request = SessionRequest.parse(context.request.body);
   const dateNow = Date.now();
 
-  const sessionEntity = createSessionEntity(request, dateNow)
+  const account = await getAccountByUsername(appContext, request.sessionData.username);
+
+  const sessionEntity = createSessionEntity(request, account, dateNow);
 
   await writeEntities(appContext, [sessionEntity]);
 

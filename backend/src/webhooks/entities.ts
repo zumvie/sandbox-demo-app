@@ -23,8 +23,7 @@ export const SessionData = v.object({
 })
 
 const DeactivateData = v.object({
-  demoId: v.string(),
-  accountId: v.string(),
+  username: v.string(),
 });
 
 export const ActivateResponse = v.object({

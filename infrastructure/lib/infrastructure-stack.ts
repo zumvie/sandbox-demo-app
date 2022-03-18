@@ -1,4 +1,5 @@
 import * as cdk from 'aws-cdk-lib';
+import * as path from "path";
 import { Construct } from 'constructs';
 
 export class InfrastructureStack extends cdk.Stack {
@@ -6,6 +7,7 @@ export class InfrastructureStack extends cdk.Stack {
     super(scope, id, props);
 
     const table = new cdk.aws_dynamodb.Table(this, "Table", {
+      tableName: "Test4",
       partitionKey: {
         name: "demoId",
         type: cdk.aws_dynamodb.AttributeType.STRING,
@@ -14,8 +16,17 @@ export class InfrastructureStack extends cdk.Stack {
         name: "identifier",
         type: cdk.aws_dynamodb.AttributeType.STRING,
       },
+      timeToLiveAttribute: "expireDate",
     });
 
+    table.addGlobalSecondaryIndex({
+      indexName: "UsernameIndex",
+      partitionKey: {
+        name: "username",
+        type: cdk.aws_dynamodb.AttributeType.STRING,
+      }
+    });
+    
     const backend = new cdk.aws_lambda_nodejs.NodejsFunction(this, 'Backend', {
       entry: "../backend/src/index.ts",    
       runtime: cdk.aws_lambda.Runtime.NODEJS_14_X,

@@ -11,6 +11,7 @@ export const AccountEntity = v.object({
   demoId: v.string(),
   identifier: v.string(),
   date: v.number(),
+  type: v.literal("Activate"),
 
   accountId: v.string(),
   username: v.string(),
@@ -30,8 +31,8 @@ export const createAccountEntity = (metadata: AccountEntity["metadata"], date: n
   return AccountEntity.parse({
     demoId: metadata.demoId,
     identifier: `/Demo/${metadata.demoId}/Date/Account/${accountId}`,
+    type: "Activate",
     date: date,
-
     accountId: accountId,
     username: `USERNAME-${uniqueId}`,
     password: `PASSWORD-${uniqueId}`,

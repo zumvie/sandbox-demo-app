@@ -1,4 +1,5 @@
 import { AppContext } from "./app-context";
+import { AccountEntity } from "./entities/account-entity";
 import { DemoEntity } from "./entities/demo-entity";
 
 export type DynamoEntity = {
@@ -33,3 +34,17 @@ export const queryDemoEntities = async (context: AppContext, demoId: string): Pr
 
   return response.Items!.map(item => DemoEntity.parse(item));
 } 
+
+export const getAccountByUsername = async (context: AppContext, username: string): Promise<AccountEntity> => {
+  const response = await context.documentClient.query({
+    TableName: context.tableName,
+    IndexName: "UsernameIndex",
+    KeyConditionExpression: "username = :username",
+    Limit: 1,
+    ExpressionAttributeValues: {
+      ":username": username,
+    }
+  }).promise();
+
+  return AccountEntity.parse(response.Items?.[0]);
+}
