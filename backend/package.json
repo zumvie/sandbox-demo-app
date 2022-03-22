@@ -25,6 +25,7 @@
     "@types/uuid": "^8.3.4",
     "@vendia/serverless-express": "^4.5.4",
     "aws-sdk": "^2.1095.0",
+    "dotenv": "^16.0.0",
     "koa": "^2.13.4",
     "koa-bodyparser": "^4.3.0",
     "koa-router": "^10.1.1",

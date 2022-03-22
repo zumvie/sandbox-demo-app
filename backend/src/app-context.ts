@@ -1,4 +1,5 @@
 import * as AWS from "aws-sdk";
+import 'dotenv/config'
 
 const getEnvString = (name: string): string => {
   if (typeof process.env[name] !== "string") {
@@ -8,16 +9,9 @@ const getEnvString = (name: string): string => {
   return process.env[name] as string;
 }
 
-const localStackEndpoint = `http://${getEnvString("LOCALSTACK_HOSTNAME")}:4566`;
-console.log("Localstack endpoint", localStackEndpoint);
-
 export const appContext = {
   tableName: getEnvString("TABLE_NAME"),
-  documentClient: new AWS.DynamoDB.DocumentClient({
-    endpoint: localStackEndpoint,
-  }),
+  documentClient: new AWS.DynamoDB.DocumentClient(),
 }
-
-console.log("AppContext", appContext);
 
 export type AppContext = typeof appContext;

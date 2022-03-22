@@ -26,7 +26,7 @@ export default function DemoWebhookCallsPage() {
   const {demoId} = useParams<{demoId: string}>();
   console.log(demoId);
 
-  const { data, error } = useFetch<{items: any[]}>(`${listDemoUrl}/${demoId}`);
+  const { data } = useFetch<{items: any[]}>(`${listDemoUrl}/${demoId}`);
   console.log(data);
 
   const entities: Entities = React.useMemo(() => {
