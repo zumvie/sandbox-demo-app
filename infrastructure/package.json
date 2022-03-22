@@ -5,10 +5,9 @@
     "infrastructure": "bin/infrastructure.js"
   },
   "scripts": {
-    "build": "tsc",
-    "watch": "tsc -w",
-    "test": "jest",
-    "cdk": "cdk"
+    "cdk": "cdk",
+    "deploy": "DOCKER_DEFAULT_PLATFORM=linux/amd64 cdk deploy",
+    "deploy:local": "DOCKER_DEFAULT_PLATFORM=linux/amd64 cdklocal deploy"
   },
   "devDependencies": {
     "@types/jest": "^26.0.10",

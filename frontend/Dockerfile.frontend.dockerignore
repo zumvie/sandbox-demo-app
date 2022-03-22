@@ -1,0 +1,11 @@
+# general ignore files
+**/node_modules
+**/.git
+**/dist
+**/build
+**/coverage
+**/cdk.out
+
+# not required projects
+backend
+infrastructure

@@ -1,0 +1,12 @@
+
+FROM node:16 as frontend
+
+WORKDIR /frontend
+
+# Caching node modules
+COPY frontend/package*.json .
+RUN npm ci
+
+# Build the actual project
+COPY frontend .
+RUN npm run build

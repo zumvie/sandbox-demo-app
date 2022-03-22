@@ -12,7 +12,7 @@ import { DemoWebhookStepper } from './demo-webhook-stepper';
 import Box from '@mui/material/Box/Box';
 import Button from '@mui/material/Button/Button';
 
-const listDemoUrl = "https://a4ycpzr13e.execute-api.localhost.localstack.cloud:4566/prod/api/demo"
+const listDemoUrl = "/api/v1/demo";
 
 export type Entities = {
   [key: string]: {
