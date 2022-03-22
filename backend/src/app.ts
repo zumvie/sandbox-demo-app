@@ -1,5 +1,7 @@
 import Koa from 'koa';
 import Router from "koa-router";
+// @ts-ignore
+import cors from "@koa/cors";
 import koaBodyParser from "koa-bodyparser";
 
 import { activateWebhookRoute } from './webhooks/activate';
@@ -12,6 +14,9 @@ import { listDemoEntities } from './routes/backend-api';
 
 const app = new Koa();
 const router = new Router();
+
+// for local development
+app.use(cors());
 
 // webhooks for zumvie integration
 router.post("/api/v1/webhooks/zumvie/activate", activateWebhookRoute(appContext));

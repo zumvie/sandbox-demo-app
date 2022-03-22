@@ -1,31 +1,17 @@
 import React from 'react';
 import { Stepper, Step, StepLabel } from '@mui/material';
-import { Entities } from './demo-webhook-calls-page';
-
-const steps = [
-  'Activate Webhook',
-  'Session Webhook',
-  'Deactivate Webhook',
-];
-
-
+import { Entities, Entity } from './demo-webhook-calls-page';
 
 export type DemoWebhookStepperProps = {
-  entity: Entities[keyof Entities];
+  entity: Entity[];
 }
 
 export const DemoWebhookStepper = (props: DemoWebhookStepperProps) => {
-  const activateSteps = Object.keys(props.entity).reduce((step, key) => {
-    if (props.entity[key as any as keyof typeof props.entity]) {
-      return step + 1;
-    }
-    return step;
-  }, -1);
 
-  return <Stepper activeStep={activateSteps} alternativeLabel>
-    {steps.map((label) => (
-      <Step key={label}>
-        <StepLabel>{label}</StepLabel>
+  return <Stepper activeStep={props.entity.length} alternativeLabel>
+    {props.entity.map((entity) => (
+      <Step key={entity.identifier}>
+        <StepLabel>{entity.type}<br/>({new Date(entity.date).toLocaleString()})</StepLabel>
       </Step>
     ))}
   </Stepper>

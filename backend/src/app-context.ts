@@ -11,7 +11,9 @@ const getEnvString = (name: string): string => {
 
 export const appContext = {
   tableName: getEnvString("TABLE_NAME"),
-  documentClient: new AWS.DynamoDB.DocumentClient(),
+  documentClient: new AWS.DynamoDB.DocumentClient({
+    region: getEnvString("AWS_REGION"),
+  }),
 }
 
 export type AppContext = typeof appContext;

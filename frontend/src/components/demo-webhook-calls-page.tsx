@@ -12,22 +12,27 @@ import { DemoWebhookStepper } from './demo-webhook-stepper';
 import Box from '@mui/material/Box/Box';
 import Button from '@mui/material/Button/Button';
 
-const listDemoUrl = "/api/v1/demo";
+const listDemoUrl = window.location.host.startsWith("localhost")
+  ? "http://localhost:3001/api/v1/demo" 
+  : "api/v1/demo";
+
+export type Entity = {
+  date: number;
+  identifier: string;
+  type: "Activate" | "Deactivate" | "Session";
+}
 
 export type Entities = {
-  [key: string]: {
-    Activate: any,
-    Session: any,
-    Deactivate: any,
-  }
+  [key: string]: Entity[]
 };
 
 export default function DemoWebhookCallsPage() {
   const {demoId} = useParams<{demoId: string}>();
-  console.log(demoId);
+  const demoDataUrl = `${listDemoUrl}/${demoId}`;
 
-  const { data } = useFetch<{items: any[]}>(`${listDemoUrl}/${demoId}`);
-  console.log(data);
+  console.log("Demo data url", demoDataUrl);
+
+  const { data } = useFetch<{items: any[]}>(demoDataUrl);
 
   const entities: Entities = React.useMemo(() => {
     if (!data?.items) {
@@ -39,11 +44,13 @@ export default function DemoWebhookCallsPage() {
     data.items.forEach(entity => {
       const accountId = entity.accountId;
 
-      entities[accountId] = {
-        ...entities[accountId],
-        [entity.type]: entity,
-      }
+      entities[accountId] = [
+        ...(entities[accountId] || []),
+        entity,
+      ]
     });
+
+    Object.values(entities).forEach(list => list.sort().reverse());
      
     return entities;
   }, [data]);
@@ -67,7 +74,7 @@ console.log(entities);
               key={accountId}
             >
               <TableCell component="th" scope="row">
-                {new Date(entities[accountId].Activate.date).toLocaleString()}
+                {new Date(entities[accountId][0].date).toLocaleString()}
               </TableCell>
 
               <TableCell>

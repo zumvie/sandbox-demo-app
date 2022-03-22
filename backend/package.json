@@ -19,6 +19,7 @@
   "homepage": "https://github.com/zumvie/sandbox-demo-app#readme",
   "dependencies": {
     "@badrap/valita": "^0.1.1",
+    "@koa/cors": "^3.2.0",
     "@types/koa": "^2.13.4",
     "@types/koa-bodyparser": "^4.3.6",
     "@types/koa-router": "^7.4.4",
