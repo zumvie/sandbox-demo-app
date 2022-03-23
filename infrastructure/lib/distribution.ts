@@ -6,6 +6,8 @@ import { Frontend } from "./frontend";
 export type DistributionProps = {
   backend: Backend;
   frontend: Frontend;
+  domainName?: string;
+  certificateId?: string;
 };
 
 export class Distribution extends Construct {
@@ -20,10 +22,30 @@ export class Distribution extends Construct {
       "AccessIdentity"
     );
 
+    // certificate required from us-east-1 therefore importing it instead of creating
+    const certificate = props.certificateId
+      ? cdk.aws_certificatemanager.Certificate.fromCertificateArn(
+          this,
+          "Certificate",
+          cdk.Arn.format({
+            service: "acm",
+            region: "us-east-1",
+            account: cdk.Stack.of(this).account,
+            resource: "certificate",
+            resourceName: props.certificateId,
+            partition: "aws",
+          })
+        )
+      : undefined;
+
+    const domainNames = props.domainName ? [props.domainName] : undefined;
+
     this.distribution = new cdk.aws_cloudfront.Distribution(
       this,
       "Distribution",
       {
+        certificate: certificate,
+        domainNames: domainNames,
         defaultRootObject: "/index.html",
         errorResponses: [
           {
