@@ -1,5 +1,5 @@
 import * as v from "@badrap/valita";
-import {ActivateRequest, DeactivateRequest } from "../webhooks/entities";
+import { DeactivateRequest } from "../webhooks/entities";
 import { AccountEntity } from "./account-entity";
 
 export const DeactivateEntity = v.object({
@@ -9,8 +9,7 @@ export const DeactivateEntity = v.object({
   date: v.number(),
   type: v.literal("Deactivate"),
   requestPayload: DeactivateRequest,
-})
-
+});
 
 export const createDeactivateAccountEntity = (
   deactivateRequest: DeactivateRequest,
@@ -19,13 +18,13 @@ export const createDeactivateAccountEntity = (
 ) => {
   const demoId = accountEntity.demoId;
   const accountId = accountEntity.accountId;
-  
+
   return DeactivateEntity.parse({
     demoId: demoId,
-    identifier: `/Demo/${demoId}/Date/Deactivate/${accountId}`,
+    identifier: `/Demo/${demoId}/Date/${date}/Deactivate/${accountId}`,
     date: date,
     type: "Deactivate",
     accountId: accountId,
     requestPayload: deactivateRequest,
   });
-}
+};

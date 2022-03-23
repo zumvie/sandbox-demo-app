@@ -55,8 +55,6 @@ export default function DemoWebhookCallsPage() {
     return entities;
   }, [data]);
 
-console.log(entities);
-
   return (
     <TableContainer component={Paper}>
       <Table>

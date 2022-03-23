@@ -3,7 +3,9 @@ import { AccountMetadata } from "../entities/account-entity";
 
 export const ActivateRequest = v.object({
   type: v.literal("Activate"),
-  count: v.number().assert((v) => v > 0 && v <= 10, "Count is not in the range of [1; 10]"),
+  count: v
+    .number()
+    .assert((v) => v > 0 && v <= 10, "Count is not in the range of [1; 10]"),
   metadata: AccountMetadata,
 });
 
@@ -20,7 +22,7 @@ export const GeneratedData = v.record(v.unknown()).optional();
 export const SessionData = v.object({
   username: v.string(),
   password: v.string(),
-})
+});
 
 const DeactivateData = v.object({
   username: v.string(),

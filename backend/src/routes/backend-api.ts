@@ -1,14 +1,36 @@
-import Koa from 'koa';
-import { AppContext } from '../app-context';
-import { queryDemoEntities } from '../db-service';
+import Koa from "koa";
+import { AppContext } from "../app-context";
+import { queryDemoEntities } from "../db-service";
+import { WebhookEntity } from "../entities/webhook-entity";
+import { RequestEntity, ResponseEntity } from "../middleware/req-res-middlware";
 
+export const listDemoEntities =
+  (appContext: AppContext) => async (context: Koa.Context) => {
+    const { demoId } = context.params;
 
-export const listDemoEntities = (appContext: AppContext) => async (context: Koa.Context) => {
-  const { demoId } = context.params;
+    const items = await queryDemoEntities(appContext, demoId);
 
-  const items = await queryDemoEntities(appContext, demoId);
+    const requestItems = items.filter((item): item is RequestEntity => RequestEntity.try(item).ok);
+    const responseItems = items.filter((item): item is ResponseEntity => ResponseEntity.try(item).ok);
+    const demoItems = items.filter((item): item is WebhookEntity => WebhookEntity.try(item).ok);
 
-  context.body = {
-    items: items,
-  }
-}
+    requestItems.forEach((reqItem) => {
+      const demoItem = demoItems.find((demoItem) => {
+        return reqItem.identifier.startsWith(demoItem.identifier);
+      });
+
+      (demoItem as any).request = reqItem;
+    });
+
+    responseItems.forEach((resItem) => {
+      const demoItem = demoItems.find((demoItem) => {
+        return resItem.identifier.startsWith(demoItem.identifier);
+      });
+
+      (demoItem as any).response = resItem;
+    });
+
+    context.body = {
+      items: demoItems,
+    };
+  };

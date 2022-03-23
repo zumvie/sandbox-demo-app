@@ -1,5 +1,5 @@
 import * as AWS from "aws-sdk";
-import 'dotenv/config'
+import "dotenv/config";
 
 const getEnvString = (name: string): string => {
   if (typeof process.env[name] !== "string") {
@@ -7,13 +7,13 @@ const getEnvString = (name: string): string => {
   }
 
   return process.env[name] as string;
-}
+};
 
 export const appContext = {
   tableName: getEnvString("TABLE_NAME"),
   documentClient: new AWS.DynamoDB.DocumentClient({
     region: getEnvString("AWS_REGION"),
   }),
-}
+};
 
 export type AppContext = typeof appContext;

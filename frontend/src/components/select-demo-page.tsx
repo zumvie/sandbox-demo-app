@@ -17,9 +17,7 @@ export default function SelectDemoPage() {
     const data = new FormData(event.currentTarget);
     const demoId = data.get('demoId');
 
-    console.log(`demoId is ${demoId}`, data);
     navigate(`/demo/${demoId}`);
-
   }, [navigate]);
 
   return (

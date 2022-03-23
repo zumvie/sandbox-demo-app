@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "ts-node src/index.ts"
+    "start": "ts-node src/index.ts",
+    "lint": "prettier --write ."
   },
   "repository": {
     "type": "git",
@@ -33,6 +34,7 @@
     "uuid": "^8.3.2"
   },
   "devDependencies": {
+    "prettier": "2.6.0",
     "typescript": "^4.6.2"
   }
 }

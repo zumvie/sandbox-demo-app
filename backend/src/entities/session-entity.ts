@@ -9,19 +9,22 @@ export const SessionEntity = v.object({
   date: v.number(),
   type: v.literal("Session"),
   requestPayload: SessionRequest,
-})
+});
 
-
-export const createSessionEntity = (sessionRequest: SessionRequest, accountEntity: AccountEntity, date: number) => {
+export const createSessionEntity = (
+  sessionRequest: SessionRequest,
+  accountEntity: AccountEntity,
+  date: number
+) => {
   const demoId = accountEntity.demoId;
   const accountId = accountEntity.accountId;
-  
+
   return SessionEntity.parse({
     demoId: demoId,
-    identifier: `/Demo/${demoId}/Date/Session/${accountId}`,
+    identifier: `/Demo/${demoId}/Date/${date}/Session/${accountId}`,
     accountId: accountId,
     type: "Session",
     date: date,
     requestPayload: sessionRequest,
   });
-}
+};

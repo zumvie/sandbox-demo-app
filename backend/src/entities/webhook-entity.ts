@@ -3,6 +3,10 @@ import { AccountEntity } from "./account-entity";
 import { DeactivateEntity } from "./deactivate-entity";
 import { SessionEntity } from "./session-entity";
 
-export const DemoEntity = v.union(AccountEntity, SessionEntity, DeactivateEntity);
+export const WebhookEntity = v.union(
+  AccountEntity,
+  SessionEntity,
+  DeactivateEntity
+);
 
-export type DemoEntity = v.Infer<typeof DemoEntity>;
+export type WebhookEntity = v.Infer<typeof WebhookEntity>;
