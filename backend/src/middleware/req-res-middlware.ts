@@ -51,7 +51,7 @@ export const createReqResMiddlware = (appContext: AppContext) => {
         identifier: identifier + "/Request",
         demoId: demoId,
         body: context.request.body,
-        headers: context.request.headers,
+        headers: context.req.headers,
         method: context.request.method,
         originalUrl: context.request.originalUrl,
       };
@@ -65,11 +65,13 @@ export const createReqResMiddlware = (appContext: AppContext) => {
       return {
         identifier: identifier + "/Response",
         demoId: demoId,
-        body: context.body,
-        headers: context.headers,
+        body: typeof context.body === "undefined" ? null : context.body,
+        headers: JSON.parse(JSON.stringify(context.res.getHeaders())),
         statusCode: context.status,
       };
     });
+
+    console.log("responseEntities", responseEntities);
 
     await writeEntities(appContext, [...requestEntities, ...responseEntities]);
   };

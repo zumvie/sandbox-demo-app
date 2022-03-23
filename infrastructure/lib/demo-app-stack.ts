@@ -1,8 +1,8 @@
-import * as cdk from 'aws-cdk-lib';
-import { Construct } from 'constructs';
-import { Backend } from './backend';
-import { Distribution } from './distribution';
-import { Frontend } from './frontend';
+import * as cdk from "aws-cdk-lib";
+import { Construct } from "constructs";
+import { Backend } from "./backend";
+import { Distribution } from "./distribution";
+import { Frontend } from "./frontend";
 
 export class DemoAppStack extends cdk.Stack {
   constructor(scope: Construct, id: string, props?: cdk.StackProps) {

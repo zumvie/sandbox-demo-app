@@ -10,12 +10,18 @@ export const listDemoEntities =
 
     const items = await queryDemoEntities(appContext, demoId);
 
-    const requestItems = items.filter((item): item is RequestEntity => RequestEntity.try(item).ok);
-    const responseItems = items.filter((item): item is ResponseEntity => ResponseEntity.try(item).ok);
-    const demoItems = items.filter((item): item is WebhookEntity => WebhookEntity.try(item).ok);
+    const requestItems = items.filter(
+      (item): item is RequestEntity => RequestEntity.try(item).ok
+    );
+    const responseItems = items.filter(
+      (item): item is ResponseEntity => ResponseEntity.try(item).ok
+    );
+    const webhookItems = items.filter(
+      (item): item is WebhookEntity => WebhookEntity.try(item).ok
+    );
 
     requestItems.forEach((reqItem) => {
-      const demoItem = demoItems.find((demoItem) => {
+      const demoItem = webhookItems.find((demoItem) => {
         return reqItem.identifier.startsWith(demoItem.identifier);
       });
 
@@ -23,7 +29,7 @@ export const listDemoEntities =
     });
 
     responseItems.forEach((resItem) => {
-      const demoItem = demoItems.find((demoItem) => {
+      const demoItem = webhookItems.find((demoItem) => {
         return resItem.identifier.startsWith(demoItem.identifier);
       });
 
@@ -31,6 +37,6 @@ export const listDemoEntities =
     });
 
     context.body = {
-      items: demoItems,
+      items: webhookItems,
     };
   };

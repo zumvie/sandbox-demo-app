@@ -1,9 +1,9 @@
-import React from 'react';
+import React from "react";
 import { Routes, Route } from "react-router-dom";
-import { CssBaseline } from '@mui/material';
-import './App.css';
-import SelectDemoPage from './components/select-demo-page';
-import DemoWebhookCallsPage from './components/demo-webhook-calls-page';
+import { CssBaseline } from "@mui/material";
+import "./App.css";
+import SelectDemoPage from "./components/select-demo-page";
+import DemoWebhookCallsPage from "./components/demo-webhook-calls-page";
 
 function App() {
   return (

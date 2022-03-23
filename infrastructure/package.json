@@ -3,11 +3,13 @@
   "version": "0.1.0",
   "scripts": {
     "deploy": "DOCKER_DEFAULT_PLATFORM=linux/amd64 cdk deploy",
+    "lint": "prettier --write .",
     "bootstrap": "cdk bootstrap"
   },
   "devDependencies": {
     "@types/node": "10.17.27",
     "aws-cdk": "2.6.0",
+    "prettier": "2.6.0",
     "ts-node": "^9.0.0",
     "typescript": "~3.9.7"
   },

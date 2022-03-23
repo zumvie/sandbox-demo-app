@@ -1,6 +1,6 @@
-import * as cdk from 'aws-cdk-lib';
-import { Construct } from 'constructs';
-import * as apigateway from '@aws-cdk/aws-apigatewayv2-alpha';
+import * as cdk from "aws-cdk-lib";
+import { Construct } from "constructs";
+import * as apigateway from "@aws-cdk/aws-apigatewayv2-alpha";
 import * as integrations from "@aws-cdk/aws-apigatewayv2-integrations-alpha";
 
 export class Backend extends Construct {
@@ -31,17 +31,17 @@ export class Backend extends Construct {
       partitionKey: {
         name: "username",
         type: cdk.aws_dynamodb.AttributeType.STRING,
-      }
+      },
     });
-    
-    const backend = new cdk.aws_lambda_nodejs.NodejsFunction(this, 'Backend', {
-      entry: "../backend/src/lambda.ts",    
+
+    const backend = new cdk.aws_lambda_nodejs.NodejsFunction(this, "Backend", {
+      entry: "../backend/src/lambda.ts",
       projectRoot: "../backend",
       depsLockFilePath: "../backend/package-lock.json",
       runtime: cdk.aws_lambda.Runtime.NODEJS_14_X,
       environment: {
         TABLE_NAME: table.tableName,
-      }
+      },
     });
 
     const api = new apigateway.HttpApi(this, "HttpApi", {
@@ -54,7 +54,10 @@ export class Backend extends Construct {
       },
     });
 
-    const integration = new integrations.HttpLambdaIntegration("HttpIntegration", backend, {
+    const integration = new integrations.HttpLambdaIntegration(
+      "HttpIntegration",
+      backend,
+      {
         payloadFormatVersion: apigateway.PayloadFormatVersion.VERSION_2_0,
       }
     );
@@ -70,4 +73,3 @@ export class Backend extends Construct {
     table.grantReadWriteData(backend);
   }
 }
-  
