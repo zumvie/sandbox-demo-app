@@ -11,6 +11,7 @@ export const AccountEntity = v.object({
   demoId: v.string(),
   identifier: v.string(),
   date: v.number(),
+  expireDate: v.number(),
   type: v.literal("Activate"),
   accountId: v.string(),
   username: v.string(),
@@ -28,11 +29,13 @@ export const createAccountEntity = (
 ) => {
   const uniqueId = v4();
   const accountId = `ACCOUNT-${uniqueId}`;
+  const expireDate = Math.round(date / 1000) + 60 * 60 * 24 * 7;
 
   return AccountEntity.parse({
     demoId: metadata.demoId,
     identifier: `/Demo/${metadata.demoId}/Date/${date}/Account/${accountId}`,
     type: "Activate",
+    expireDate: expireDate,
     date: date,
     accountId: accountId,
     username: `USERNAME-${uniqueId}`,

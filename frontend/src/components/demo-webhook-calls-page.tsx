@@ -13,7 +13,7 @@ import Box from "@mui/material/Box/Box";
 
 const listDemoUrl = window.location.host.startsWith("localhost")
   ? "http://localhost:3001/api/v1/demo"
-  : "api/v1/demo";
+  : "/api/v1/demo";
 
 export type Entity = {
   date: number;

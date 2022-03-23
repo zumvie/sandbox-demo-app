@@ -7,6 +7,7 @@ export const SessionEntity = v.object({
   identifier: v.string(),
   accountId: v.string(),
   date: v.number(),
+  expireDate: v.number(),
   type: v.literal("Session"),
   requestPayload: SessionRequest,
 });
@@ -18,11 +19,13 @@ export const createSessionEntity = (
 ) => {
   const demoId = accountEntity.demoId;
   const accountId = accountEntity.accountId;
+  const expireDate = Math.round(date / 1000) + 60 * 60 * 24 * 7;
 
   return SessionEntity.parse({
     demoId: demoId,
     identifier: `/Demo/${demoId}/Date/${date}/Session/${accountId}`,
     accountId: accountId,
+    expireDate: expireDate,
     type: "Session",
     date: date,
     requestPayload: sessionRequest,

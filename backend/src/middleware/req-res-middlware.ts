@@ -10,6 +10,7 @@ export const RequestEntity = v.object({
   originalUrl: v.string(),
   method: v.string(),
   body: v.unknown(),
+  expireDate: v.number(),
 });
 
 export type RequestEntity = v.Infer<typeof RequestEntity>;
@@ -20,6 +21,7 @@ export const ResponseEntity = v.object({
   headers: v.record(),
   statusCode: v.number(),
   body: v.unknown(),
+  expireDate: v.number(),
 });
 
 export type ResponseEntity = v.Infer<typeof ResponseEntity>;
@@ -42,6 +44,8 @@ export const createReqResMiddlware = (appContext: AppContext) => {
       return;
     }
 
+    const expireDate = Math.round(Date.now() / 1000) + 60 * 60 * 24 * 7;
+
     const requestEntities: RequestEntity[] = identifiers.map((identifier) => {
       const match = identifier.match(/^\/Demo\/([^\/]+)/);
 
@@ -50,6 +54,7 @@ export const createReqResMiddlware = (appContext: AppContext) => {
       return {
         identifier: identifier + "/Request",
         demoId: demoId,
+        expireDate: expireDate,
         body: context.request.body,
         headers: context.req.headers,
         method: context.request.method,
@@ -65,6 +70,7 @@ export const createReqResMiddlware = (appContext: AppContext) => {
       return {
         identifier: identifier + "/Response",
         demoId: demoId,
+        expireDate: expireDate,
         body: typeof context.body === "undefined" ? null : context.body,
         headers: JSON.parse(JSON.stringify(context.res.getHeaders())),
         statusCode: context.status,
