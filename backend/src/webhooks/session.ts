@@ -25,16 +25,16 @@ export const sessionWebhookRoute =
 
     context.body = SessionResponse.parse({
       localStorage: {
-        SESSION_REQUEST_ACCESS_TOKEN_EXAMPLE:
-          "SESSION_REQUEST_ACCESS_TOKEN_EXAMPLE",
+        SESSION_RESPONSE_LOCAL_STORAGE:
+          "SESSION_RESPONSE_LOCAL_STORAGE_VALUE",
       },
       cookies: {
-        SESSION_REQUEST_COOKIE_EXAMPLE: "SESSION_REQUEST_COOKIE_EXAMPLE",
+        SESSION_RESPONSE_COOKIE: "SESSION_RESPONSE_COOKIE_VALUE",
       },
     });
 
     context.cookies.set(
-      "SESSION_REQUEST_RESPONSE_COOKIE",
-      "SESSION_REQUEST_RESPONSE_COOKIE"
+      "SESSION_HEADER_COOKIE",
+      "SESSION_HEADER_COOKIE_VALUE",
     );
   };

@@ -52,10 +52,10 @@ export const SessionRequest = v.object({
 
 export const SessionResponse = v.object({
   localStorage: v.object({
-    SESSION_REQUEST_ACCESS_TOKEN_EXAMPLE: v.string(),
+    SESSION_RESPONSE_LOCAL_STORAGE: v.string(),
   }),
   cookies: v.object({
-    SESSION_REQUEST_COOKIE_EXAMPLE: v.string(),
+    SESSION_RESPONSE_COOKIE: v.string(),
   }),
 });
 

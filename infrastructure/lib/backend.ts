@@ -10,6 +10,7 @@ export class Backend extends Construct {
     super(scope, id);
 
     const table = new cdk.aws_dynamodb.Table(this, "Table", {
+      removalPolicy: cdk.RemovalPolicy.DESTROY,
       partitionKey: {
         name: "demoId",
         type: cdk.aws_dynamodb.AttributeType.STRING,

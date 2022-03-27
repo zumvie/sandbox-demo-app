@@ -6,7 +6,10 @@ export class Frontend extends Construct {
   constructor(scope: Construct, id: string) {
     super(scope, id);
 
-    this.bucket = new cdk.aws_s3.Bucket(this, "FrontendAssets");
+    this.bucket = new cdk.aws_s3.Bucket(this, "FrontendAssets", {
+      autoDeleteObjects: true,
+      removalPolicy: cdk.RemovalPolicy.DESTROY,
+    });
 
     // dockerized way of building assets for frontend
     const websiteAssets = cdk.aws_lambda.Code.fromDockerBuild("../", {

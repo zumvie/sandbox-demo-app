@@ -73,6 +73,23 @@ export class Distribution extends Construct {
       }
     );
 
+    const requestPolicy = new cdk.aws_cloudfront.OriginRequestPolicy(
+      this,
+      "CookiesRequestPolicy",
+      {
+        cookieBehavior: cdk.aws_cloudfront.OriginRequestCookieBehavior.all(),
+        headerBehavior:
+          cdk.aws_cloudfront.OriginRequestHeaderBehavior.allowList(
+            "origin",
+            "zumvie-site-id",
+            "zumvie-session-id",
+            "zumvie-request-id"
+          ),
+        queryStringBehavior:
+          cdk.aws_cloudfront.OriginRequestQueryStringBehavior.all(),
+      }
+    );
+
     this.distribution.addBehavior(
       "/api/v1/*",
       new cdk.aws_cloudfront_origins.HttpOrigin(props.backend.restApiEndpoint),
@@ -83,8 +100,7 @@ export class Distribution extends Construct {
         responseHeadersPolicy:
           cdk.aws_cloudfront.ResponseHeadersPolicy.CORS_ALLOW_ALL_ORIGINS,
         allowedMethods: cdk.aws_cloudfront.AllowedMethods.ALLOW_ALL,
-        originRequestPolicy:
-          cdk.aws_cloudfront.OriginRequestPolicy.CORS_CUSTOM_ORIGIN,
+        originRequestPolicy: requestPolicy,
       }
     );
 
