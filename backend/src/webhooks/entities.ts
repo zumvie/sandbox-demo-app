@@ -10,11 +10,11 @@ export const ActivateRequest = v.object({
 });
 
 export const LocalStorage = v.object({
-  ACCESS_TOKEN_EXAMPLE: v.string(),
+  LOCAL_STORAGE_ACCOUNT_TOKEN: v.string(),
 });
 
 export const SessionCookies = v.object({
-  SESSION_COOKIE_EXAMPLE: v.string(),
+  SESSION_COOKIE_ACCOUNT_TOKEN: v.string(),
 });
 
 export const GeneratedData = v.record(v.unknown()).optional();

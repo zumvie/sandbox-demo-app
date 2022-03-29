@@ -10,10 +10,29 @@ import { useParams } from "react-router-dom";
 import { useFetch } from "usehooks-ts";
 import { DemoWebhookStepper } from "./demo-webhook-stepper";
 import Box from "@mui/material/Box/Box";
+import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
+import { MainListItems } from "./whoami-list-items";
+import MenuIcon from "@mui/icons-material/Menu";
+
+import { Drawer } from "./components.styled";
+import { Toolbar, IconButton, Divider, List } from "@mui/material";
 
 const listDemoUrl = window.location.host.startsWith("localhost")
   ? "http://localhost:3001/api/v1/demo"
   : "/api/v1/demo";
+
+const whoamiUrl = window.location.host.startsWith("localhost")
+  ? "http://localhost:3001/api/v1/whoami"
+  : "/api/v1/whoami";
+
+export type WhoamiResponse = {
+  status: "User found";
+  demoId: string;
+  accountId: string;
+  headers: { [key: string]: string };
+  cookies: { [key: string]: string };
+  entities: Entity[];
+};
 
 export type Entity = {
   date: number;
@@ -28,10 +47,13 @@ export type Entities = {
 export default function DemoWebhookCallsPage() {
   const { demoId } = useParams<{ demoId: string }>();
   const demoDataUrl = `${listDemoUrl}/${demoId}`;
+  const [open, setOpen] = React.useState(true);
 
   console.log("Demo data url", demoDataUrl);
 
   const { data } = useFetch<{ items: any[] }>(demoDataUrl);
+
+  const { data: whoamiData } = useFetch<WhoamiResponse>(whoamiUrl);
 
   const entities: Entities = React.useMemo(() => {
     if (!data?.items) {
@@ -51,28 +73,59 @@ export default function DemoWebhookCallsPage() {
     return entities;
   }, [data]);
 
+  const toggleDrawer = () => {
+    setOpen(!open);
+  };
+
   return (
-    <TableContainer component={Paper}>
-      <Table>
-        <TableHead>
-          <TableRow>
-            <TableCell align="center">
-              Webhook Calls For Seperate Accounts
-            </TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {Object.keys(entities).map((accountId) => (
-            <TableRow key={accountId}>
-              <TableCell>
-                <Box sx={{ width: "100%" }}>
-                  <DemoWebhookStepper entity={entities[accountId]} />
-                </Box>
+    <>
+      <Drawer variant="permanent" open={open}>
+        <Toolbar
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "flex-end",
+            px: [1],
+          }}
+        >
+          Who Am I ?
+          <IconButton onClick={toggleDrawer}>
+            <ChevronLeftIcon />
+          </IconButton>
+        </Toolbar>
+        <Divider />
+        <List sx={{ overflow: "scroll", width: "400px", height: "100%" }}>
+          <MainListItems data={whoamiData} />
+        </List>
+      </Drawer>
+      <TableContainer component={Paper}>
+        <Table>
+          <TableHead>
+            <TableRow>
+              <TableCell align="center">
+                Webhook Calls For Seperate Accounts
               </TableCell>
             </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-    </TableContainer>
+          </TableHead>
+          <TableBody>
+            {Object.keys(entities).map((accountId) => (
+              <TableRow
+                key={accountId}
+                sx={{
+                  backgroundColor:
+                    accountId === whoamiData?.accountId ? "green" : undefined,
+                }}
+              >
+                <TableCell>
+                  <Box sx={{ width: "100%" }}>
+                    <DemoWebhookStepper entity={entities[accountId]} />
+                  </Box>
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
+    </>
   );
 }

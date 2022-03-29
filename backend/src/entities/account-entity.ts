@@ -17,7 +17,7 @@ export const AccountEntity = v.object({
   username: v.string(),
   password: v.string(),
   sessionCookie: v.string(),
-  accessToken: v.string(),
+  localStorage: v.string(),
   metadata: AccountMetadata,
 });
 
@@ -31,17 +31,27 @@ export const createAccountEntity = (
   const accountId = `ACCOUNT-${uniqueId}`;
   const expireDate = Math.round(date / 1000) + 60 * 60 * 24 * 7;
 
+  const identifier = `/Demo/${metadata.demoId}/Account/${accountId}/Activate/Date/${date}/`;
+
+  const accountKeys = Buffer.from(
+    JSON.stringify({
+      accountId: accountId,
+      demoId: metadata.demoId,
+    }),
+    "utf-8"
+  ).toString("base64");
+
   return AccountEntity.parse({
     demoId: metadata.demoId,
-    identifier: `/Demo/${metadata.demoId}/Date/${date}/Account/${accountId}`,
+    identifier: identifier,
     type: "Activate",
     expireDate: expireDate,
     date: date,
     accountId: accountId,
     username: `USERNAME-${uniqueId}`,
     password: `PASSWORD-${uniqueId}`,
-    sessionCookie: `SESSION-COOKIE-${uniqueId}`,
-    accessToken: `ACCESS-TOKEN-${uniqueId}`,
+    sessionCookie: accountKeys,
+    localStorage: accountKeys,
     metadata: metadata,
   });
 };

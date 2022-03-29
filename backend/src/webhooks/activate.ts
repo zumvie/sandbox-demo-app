@@ -28,10 +28,10 @@ export const activateWebhookRoute =
             username: acc.username,
           },
           localStorage: {
-            ACCESS_TOKEN_EXAMPLE: acc.accessToken,
+            LOCAL_STORAGE_ACCOUNT_TOKEN: acc.localStorage,
           },
           sessionCookies: {
-            SESSION_COOKIE_EXAMPLE: acc.sessionCookie,
+            SESSION_COOKIE_ACCOUNT_TOKEN: acc.sessionCookie,
           },
           generatedData: {
             accountEntity: acc,

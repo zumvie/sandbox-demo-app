@@ -12,6 +12,7 @@ import { appContext } from "./app-context";
 import { listDemoEntities } from "./routes/backend-api";
 import { createReqResMiddlware } from "./middleware/req-res-middlware";
 import { createErrorMiddleware } from "./middleware/error-middleware";
+import { whoamiRoute } from "./routes/whoami-route";
 
 const app = new Koa();
 const router = new Router();
@@ -29,6 +30,9 @@ router.post("/api/v1/webhooks/zumvie/session", sessionWebhookRoute(appContext));
 
 // api for demo website
 router.get("/api/v1/demo/:demoId", listDemoEntities(appContext));
+
+// determines current local storage data
+router.get("/api/v1/whoami", whoamiRoute(appContext));
 
 // something to return in generic case
 router.get("/(.*)", infoRoute());

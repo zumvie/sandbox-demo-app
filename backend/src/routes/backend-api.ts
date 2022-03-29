@@ -6,7 +6,7 @@ import { RequestEntity, ResponseEntity } from "../middleware/req-res-middlware";
 
 export const listDemoEntities =
   (appContext: AppContext) => async (context: Koa.Context) => {
-    const { demoId } = context.params;
+    const { demoId }: { demoId: string } = context.params;
 
     const items = await queryDemoEntities(appContext, demoId);
 

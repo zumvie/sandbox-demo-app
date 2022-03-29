@@ -83,7 +83,9 @@ export class Distribution extends Construct {
             "origin",
             "zumvie-site-id",
             "zumvie-session-id",
-            "zumvie-request-id"
+            "zumvie-request-id",
+            // example header for users to test out
+            "zumvie-webhook-header"
           ),
         queryStringBehavior:
           cdk.aws_cloudfront.OriginRequestQueryStringBehavior.all(),

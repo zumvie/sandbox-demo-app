@@ -45,6 +45,28 @@ export const queryDemoEntities = async (
   return response.Items || [];
 };
 
+export const queryAccountEntities = async (
+  context: AppContext,
+  input: {
+    demoId: string;
+    accountId: string;
+  }
+): Promise<unknown[]> => {
+  const response = await context.documentClient
+    .query({
+      TableName: context.tableName,
+      KeyConditionExpression: `demoId = :demoId and begins_with(identifier, :identifier)`,
+      ExpressionAttributeValues: {
+        ":demoId": input.demoId,
+        ":identifier": `/Demo/${input.demoId}/Account/${input.accountId}`,
+      },
+      ScanIndexForward: false,
+    })
+    .promise();
+
+  return response.Items || [];
+};
+
 export const getAccountByUsername = async (
   context: AppContext,
   username: string

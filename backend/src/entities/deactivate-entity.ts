@@ -23,7 +23,7 @@ export const createDeactivateAccountEntity = (
 
   return DeactivateEntity.parse({
     demoId: demoId,
-    identifier: `/Demo/${demoId}/Date/${date}/Deactivate/${accountId}`,
+    identifier: `/Demo/${demoId}/Account/${accountId}/Deactivate/Date/${date}/`,
     date: date,
     expireDate: expireDate,
     type: "Deactivate",

@@ -23,7 +23,7 @@ export const createSessionEntity = (
 
   return SessionEntity.parse({
     demoId: demoId,
-    identifier: `/Demo/${demoId}/Date/${date}/Session/${accountId}`,
+    identifier: `/Demo/${demoId}/Account/${accountId}/Session/Date/${date}/`,
     accountId: accountId,
     expireDate: expireDate,
     type: "Session",
