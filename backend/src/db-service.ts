@@ -1,6 +1,5 @@
 import { AppContext } from "./app-context";
 import { AccountEntity } from "./entities/account-entity";
-import { WebhookEntity } from "./entities/webhook-entity";
 
 export type DynamoEntity = {
   demoId: string;

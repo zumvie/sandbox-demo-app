@@ -12,7 +12,6 @@ import { DemoWebhookStepper } from "./demo-webhook-stepper";
 import Box from "@mui/material/Box/Box";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import { MainListItems } from "./whoami-list-items";
-import MenuIcon from "@mui/icons-material/Menu";
 
 import { Drawer } from "./components.styled";
 import { Toolbar, IconButton, Divider, List } from "@mui/material";
@@ -94,7 +93,14 @@ export default function DemoWebhookCallsPage() {
           </IconButton>
         </Toolbar>
         <Divider />
-        <List sx={{ overflow: "scroll", width: "400px", height: "100%" }}>
+        <List
+          sx={{
+            overflow: "scroll",
+            width: "400px",
+            height: "100%",
+            paddingLeft: 4,
+          }}
+        >
           <MainListItems data={whoamiData} />
         </List>
       </Drawer>

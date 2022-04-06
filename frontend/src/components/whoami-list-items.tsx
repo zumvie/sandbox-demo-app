@@ -2,12 +2,61 @@ import * as React from "react";
 import ListItemText from "@mui/material/ListItemText";
 import ListSubheader from "@mui/material/ListSubheader";
 import { WhoamiResponse } from "./demo-webhook-calls-page";
-import { maxWidth } from "@mui/system";
 import ReactJson from "react-json-view";
 
 export const MainListItems = (props: { data?: WhoamiResponse }) => {
   console.log(props.data);
 
+  const [displayNoneButton, setDisplayNoneButtonRef] =
+    React.useState<HTMLButtonElement | null>();
+  const [disableButton, setDisableButtonRef] =
+    React.useState<HTMLButtonElement | null>();
+
+  const [displayNoneTest, setDisplayNoneTest] = React.useState(false);
+  const [disableTest, setDisableTest] = React.useState(false);
+
+  React.useEffect(() => {
+    if (!displayNoneButton || !disableButton) {
+      return;
+    }
+
+    setDisplayNoneTest(displayNoneButton.style.display === "none");
+    setDisableTest(disableButton.disabled);
+
+    const intervalId = setInterval(() => {
+      setDisplayNoneTest(displayNoneButton.style.display === "none");
+      setDisableTest(disableButton.disabled);
+    }, 1000);
+
+    return () => {
+      clearInterval(intervalId);
+    };
+  }, [displayNoneButton, disableButton, displayNoneTest, disableTest]);
+
+  return (
+    <React.Fragment>
+      <WhoAmIList data={props.data} />
+
+      <ListSubheader component="div" sx={{ position: "relative" }}>
+        Actionable Selectors
+      </ListSubheader>
+
+      <div>
+        <p>.display-none-class - {displayNoneTest ? "PASS" : "FAIL"}</p>
+        <button ref={setDisplayNoneButtonRef} className="display-none-class">
+          Display None
+        </button>
+        <br />
+        <p>.disable-class - {disableTest ? "PASS" : "FAIL"}</p>
+        <button ref={setDisableButtonRef} className="display-none-class">
+          Disable
+        </button>
+      </div>
+    </React.Fragment>
+  );
+};
+
+const WhoAmIList = (props: { data?: WhoamiResponse }) => {
   if (!props.data) {
     return <p>No loaded!</p>;
   }
@@ -16,10 +65,8 @@ export const MainListItems = (props: { data?: WhoamiResponse }) => {
   const cookies = props.data.cookies;
   const headers = props.data.headers || {};
 
-  console.log(headers);
-
   return (
-    <React.Fragment>
+    <>
       <ListSubheader component="div" sx={{ position: "relative" }}>
         Status
       </ListSubheader>
@@ -62,6 +109,6 @@ export const MainListItems = (props: { data?: WhoamiResponse }) => {
         displayDataTypes={false}
         enableClipboard={false}
       />
-    </React.Fragment>
+    </>
   );
 };
