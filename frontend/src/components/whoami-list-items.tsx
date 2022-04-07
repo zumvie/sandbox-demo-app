@@ -48,7 +48,7 @@ export const MainListItems = (props: { data?: WhoamiResponse }) => {
         </button>
         <br />
         <p>.disable-class - {disableTest ? "PASS" : "FAIL"}</p>
-        <button ref={setDisableButtonRef} className="display-none-class">
+        <button ref={setDisableButtonRef} className="disable-class">
           Disable
         </button>
       </div>
