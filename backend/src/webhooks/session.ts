@@ -30,6 +30,9 @@ export const sessionWebhookRoute =
       cookies: {
         SESSION_RESPONSE_COOKIE: account.accountId,
       },
+      deactivateData: {
+        SESSION_RESPONSE_DEACTIVATE_DATA: "more deactivate data",
+      },
     });
 
     context.cookies.set("SESSION_HEADER_COOKIE", account.accountId);

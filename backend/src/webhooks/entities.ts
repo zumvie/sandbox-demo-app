@@ -24,16 +24,14 @@ export const SessionData = v.object({
   password: v.string(),
 });
 
-const DeactivateData = v.object({
-  username: v.string(),
-});
-
 export const ActivateResponse = v.object({
   accounts: v.array(
     v.object({
       localStorage: LocalStorage,
       sessionCookies: SessionCookies,
-      deactivateData: DeactivateData,
+      deactivateData: v.object({
+        username: v.string(),
+      }),
       generatedData: v.record(v.unknown()),
       sessionData: SessionData,
     })
@@ -42,7 +40,10 @@ export const ActivateResponse = v.object({
 
 export const DeactivateRequest = v.object({
   type: v.literal("Deactivate"),
-  deactivateData: DeactivateData,
+  deactivateData: v.object({
+    username: v.string(),
+    SESSION_RESPONSE_DEACTIVATE_DATA: v.string(),
+  }),
 });
 
 export const SessionRequest = v.object({
@@ -56,6 +57,9 @@ export const SessionResponse = v.object({
   }),
   cookies: v.object({
     SESSION_RESPONSE_COOKIE: v.string(),
+  }),
+  deactivateData: v.object({
+    SESSION_RESPONSE_DEACTIVATE_DATA: v.string(),
   }),
 });
 
