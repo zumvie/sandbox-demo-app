@@ -6,8 +6,7 @@ import { Frontend } from "./frontend";
 export type DistributionProps = {
   backend: Backend;
   frontend: Frontend;
-  domainName?: string;
-  certificateId?: string;
+  domainName: string;
 };
 
 export class Distribution extends Construct {
@@ -22,21 +21,21 @@ export class Distribution extends Construct {
       "AccessIdentity"
     );
 
-    // certificate required from us-east-1 therefore importing it instead of creating
-    const certificate = props.certificateId
-      ? cdk.aws_certificatemanager.Certificate.fromCertificateArn(
-          this,
-          "Certificate",
-          cdk.Arn.format({
-            service: "acm",
-            region: "us-east-1",
-            account: cdk.Stack.of(this).account,
-            resource: "certificate",
-            resourceName: props.certificateId,
-            partition: "aws",
-          })
-        )
-      : undefined;
+    const zoneDomainName = props.domainName.match(/(?<=\.).*/g)![0];
+
+    const hostedZone = cdk.aws_route53.HostedZone.fromLookup(this, "Zone", {
+      domainName: zoneDomainName,
+    });
+
+    const certificate = new cdk.aws_certificatemanager.DnsValidatedCertificate(
+      this,
+      "Certificate",
+      {
+        domainName: props.domainName,
+        region: "us-east-1",
+        hostedZone: hostedZone,
+      }
+    );
 
     const domainNames = props.domainName ? [props.domainName] : undefined;
 
