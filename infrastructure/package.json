@@ -2,7 +2,7 @@
   "name": "infrastructure",
   "version": "0.1.0",
   "scripts": {
-    "deploy": "DOCKER_DEFAULT_PLATFORM=linux/amd64 cdk deploy --context domainName=api-docs.app.zumvie.com",
+    "deploy": "DOCKER_DEFAULT_PLATFORM=linux/amd64 cdk deploy --context domainName=sandbox-demo.app.zumvie.com",
     "lint": "prettier --write .",
     "bootstrap": "cdk bootstrap"
   },

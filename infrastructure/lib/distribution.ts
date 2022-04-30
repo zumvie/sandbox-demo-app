@@ -72,6 +72,15 @@ export class Distribution extends Construct {
       }
     );
 
+    new cdk.aws_route53.ARecord(this, "ARecord", {
+      target: cdk.aws_route53.RecordTarget.fromAlias(
+        new cdk.aws_route53_targets.CloudFrontTarget(this.distribution)
+      ),
+      zone: hostedZone,
+      recordName: props.domainName,
+      comment: "Zumvie Sandbox API docs domain name"
+    });
+
     const requestPolicy = new cdk.aws_cloudfront.OriginRequestPolicy(
       this,
       "CookiesRequestPolicy",
