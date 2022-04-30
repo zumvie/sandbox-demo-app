@@ -56,7 +56,9 @@ export default function DemoIframePage() {
 
         <iframe
           src={searchParams.get("url") || ""}
-          // sandbox="allow-same-origin allow-scripts allow-popups allow-forms"
+          allowFullScreen
+          allowTransparency
+          sandbox="allow-same-origin allow-scripts allow-popups allow-forms allow-storage-access-by-user-activation"
           style={{
             border: "none",
             backgroundColor: "grey",
