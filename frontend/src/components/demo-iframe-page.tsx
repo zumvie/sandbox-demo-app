@@ -13,6 +13,9 @@ export default function DemoIframePage() {
 
   React.useEffect(() => {
     // if iframe is empty
+    if (searchParams.get("url")) {
+      return;
+    }
     setSearchParams({
       url: "https://www.openstreetmap.org/export/embed.html",
     });
