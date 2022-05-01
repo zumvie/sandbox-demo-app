@@ -60,7 +60,7 @@ export class Distribution extends Construct {
               originAccessIdentity: accessIdentity,
             }
           ),
-          cachePolicy: cdk.aws_cloudfront.CachePolicy.CACHING_DISABLED,
+          cachePolicy: cdk.aws_cloudfront.CachePolicy.CACHING_OPTIMIZED,
           viewerProtocolPolicy:
             cdk.aws_cloudfront.ViewerProtocolPolicy.REDIRECT_TO_HTTPS,
           responseHeadersPolicy:
