@@ -1,6 +1,6 @@
 # About
 
-Example app which visualizes webhook calls for zumvie sandbox integration. Hosted version can be accessed [https://sandbox-demo-app.zumvie.com](https://sandbox-demo-app.zumvie.com).
+Example app which visualizes webhook calls for zumvie sandbox integration. Hosted version can be accessed [https://sandbox-demo-app.zumvie.com](https://sandbox-demo.app.zumvie.com).
 
 # Getting Started
 
