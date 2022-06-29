@@ -42,7 +42,7 @@ export const DeactivateRequest = v.object({
   type: v.literal("Deactivate"),
   deactivateData: v.object({
     username: v.string(),
-    SESSION_RESPONSE_DEACTIVATE_DATA: v.string(),
+    SESSION_RESPONSE_DEACTIVATE_DATA: v.string().optional(),
   }),
 });
 

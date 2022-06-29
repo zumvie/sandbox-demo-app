@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head> </head>
+  <body>
+    <p id="title">Level 1</p>
+    <p id="output"></p>
+    <iframe width="600px" height="600px" src="/level-2.html"> </iframe>
+    <script>
+      const level1 = window.document.getElementById("title");
+      const root = window.parent.document.getElementById("title");
+
+      let levelTop;
+      try {
+        levelTop = window.top.document.getElementById("title");
+      } catch (err) {
+        console.log("Level 1 cannot access top property on window");
+      }
+
+      level1.setAttribute("style", "background-color: green");
+
+      const outputText = [
+        level1.innerText,
+        root.innerText,
+        levelTop?.innerText
+      ].join(", ");
+
+      const o = window.document.getElementById("output");
+      o.innerText = outputText;
+    </script>
+  </body>
+</html>

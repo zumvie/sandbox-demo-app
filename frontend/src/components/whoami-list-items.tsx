@@ -51,6 +51,11 @@ export const MainListItems = (props: { data?: WhoamiResponse }) => {
         <button ref={setDisableButtonRef} className="disable-class">
           Disable
         </button>
+        <div>
+            <p>Testing iframe window objects</p>
+            <p id="title">Root Iframe Parent</p>
+          <iframe height="400px" scrolling="no" style={{overflow: "hidden"}} src="/level-0.html"></iframe>
+        </div>
       </div>
     </React.Fragment>
   );
